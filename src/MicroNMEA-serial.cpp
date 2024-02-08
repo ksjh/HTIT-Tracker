@@ -37,13 +37,13 @@ void print_gnss() {
   Serial.printf("%04u-%02u-%02u %02u:%02u:%02u.%02u\r\n", nmea.getYear(),
                 nmea.getMonth(), nmea.getDay(), nmea.getHour(),
                 nmea.getMinute(), nmea.getSecond(), nmea.getHundredths());
+  Serial.printf("LAT   %3ld.%06ld\r\n", gnss_lat / 1000000L,
+                gnss_lat % 1000000L);
+  Serial.printf("LON   %3ld.%06ld\r\n", gnss_lon / 1000000L,
+                gnss_lon % 1000000L);
+  Serial.printf("ALT  %4ld.%03ld\r\n", gnss_alt / 1000L, gnss_alt % 1000L);
+  Serial.printf("HDOP   %2u.%01u\r\n", gnss_hdop / 10, gnss_hdop % 10);
   if(nmea.isValid()) {
-    Serial.printf("LAT   %3ld.%06ld\r\n", gnss_lat / 1000000L,
-                  gnss_lat % 1000000L);
-    Serial.printf("LON   %3ld.%06ld\r\n", gnss_lon / 1000000L,
-                  gnss_lon % 1000000L);
-    Serial.printf("ALT  %4ld.%03ld\r\n", gnss_alt / 1000L, gnss_alt % 1000L);
-    Serial.printf("HDOP   %2u.%01u\r\n", gnss_hdop / 10, gnss_hdop % 10);
     Serial.printf("SYS %c #SAT %u\r\n\r\n", nmea.getNavSystem(),
                   nmea.getNumSatellites());
   } else {
@@ -55,7 +55,7 @@ void loop() {
   while(Serial1.available() > 0) {
     gnss_ch = Serial1.read();
     nmea.process(gnss_ch);
-    if(millis() - gnss_millis > GNSS_UPDATE)
-      print_gnss();
   }
+  if(millis() - gnss_millis > GNSS_UPDATE)
+    print_gnss();
 }
