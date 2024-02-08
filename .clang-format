@@ -1,0 +1,9 @@
+﻿---
+BasedOnStyle: LLVM
+IncludeBlocks: Regroup
+SpaceAfterCStyleCast: 'false'
+SpaceAfterLogicalNot: 'false'
+SpaceBeforeParens: Never
+SpaceBeforeRangeBasedForLoopColon: 'false'
+
+...
